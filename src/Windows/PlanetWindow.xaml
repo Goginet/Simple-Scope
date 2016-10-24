@@ -1,0 +1,59 @@
+﻿<Window x:Class="Simple_Scope.Windows.PlanetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Simple_Scope.Windows"
+        mc:Ignorable="d"
+        Title="PlanetWindow" Height="374.134" Width="347.805">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" DataContext="{DynamicResource infoObject}" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Name:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Position:" VerticalAlignment="Center" />
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="X:"/>
+                <TextBox Text="{Binding X}" MinWidth="35" MaxWidth="40" />
+                <Label Content="Y:" Margin="10, 0"/>
+                <TextBox Text="{Binding Y}" MinWidth="35" MaxWidth="40" />
+                <Label Content="Z:" Margin="10, 0"/>
+                <TextBox Text="{Binding Z}" MinWidth="35" MaxWidth="40" />
+            </StackPanel>
+            <Label Grid.Row="2" Grid.Column="0" Content="Radius:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Radius}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <Label Grid.Row="3" Grid.Column="0" Content="OrbitRadius:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding OrbitRadius}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <Label Grid.Row="4" Grid.Column="0" Content="Weight:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <Label Grid.Row="5" Grid.Column="0" Content="AxisPeriod:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding AxisPeriod}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <Label Grid.Row="6" Grid.Column="0" Content="OrbitPeriod:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OrbitPeriod}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <Label Grid.Row="7" Grid.Column="0" Content="Parent:" VerticalAlignment="Center" />
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Parent}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Button Name="SaveButton" Content="Save" Width="100" Click="SaveButton_Click"/>
+            <Button Name="CancelButton" Content="Cancel" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
