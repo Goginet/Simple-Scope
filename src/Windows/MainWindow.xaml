@@ -13,37 +13,19 @@
         Title="MainWindow" Height="673.189" Width="1119.266"
         >
     <Window.Resources>
-        <Vector3D x:Key="CameraLookDirection" />
-        <Point3D x:Key="CameraPosition" />
-        <data:Universe x:Key="universe" x:Name="universe">
-            <data:Universe.Objects>
-                <data:Constellation Name="Constellation1" Position="0, 0, 0" />
-                <data:Star Name="Star1" Position="0, 0, 100" Parent="Constellation1" Luminosity="12" Weight="13" />
-                <data:Star Name="Star2" Position="10, -10, 100" Parent="Constellation1" Luminosity="12" Weight="13" />
-                <data:Star Name="Star3" Position="20, 10, 100" Parent="Constellation1" Luminosity="12" Weight="13" />
-                <data:Star Name="Star4" Position="30, 20, 100" Parent="Constellation1" Luminosity="12" Weight="13" />
-                <data:Star Name="Star5" Position="40, 30, 100" Parent="Constellation1" Luminosity="12" Weight="13" />
-                <data:Star Name="Star6" Position="50, 0, 100" Parent="Constellation1" Luminosity="12" Weight="13" />
-                <data:Planet Name="Planet1" Position="0, 0, 100" Parent="Star1" Radius="12" OrbitRadius="15" Weight="11" AxisPeriod="12" OrbitPeriod="22" />
-                <data:Planet Name="Planet2" Position="0, 0, 100" Parent="Star1" Radius="12" OrbitRadius="15" Weight="11" AxisPeriod="12" OrbitPeriod="22" />
-                <data:Planet Name="Planet3" Position="0, 0, 100" Parent="Star1" Radius="12" OrbitRadius="15" Weight="11" AxisPeriod="12" OrbitPeriod="22" />
-                <data:Planet Name="Planet4" Position="0, 0, 100" Parent="Star1" Radius="12" OrbitRadius="15" Weight="11" AxisPeriod="12" OrbitPeriod="22" />
-                <data:Planet Name="Planet5" Position="0, 0, 100" Parent="Star1" Radius="12" OrbitRadius="15" Weight="11" AxisPeriod="12" OrbitPeriod="22" />
-                <data:Planet Name="Planet6" Position="0, 0, 100" Parent="Star1" Radius="12" OrbitRadius="15" Weight="11" AxisPeriod="12" OrbitPeriod="22" />
-            </data:Universe.Objects>
-        </data:Universe>
+        <data:Universe x:Key="universe" />
+        <local:SphericalCamera x:Key="camera" CameraSpeed="10" DirectionInGrad="0, 90" />
     </Window.Resources>
-    
     <Grid Name="mainLayout" DataContext="{DynamicResource universe}"> 
-        <Grid Name="View3dLayout" Background="Black">
-            <sky:VariableSkyView x:Name="sky" ItemsSource="{StaticResource universe}">
+        <Grid Name="View3dLayout" Background="Black" MouseMove="View3dLayout_MouseMove" MouseDown="View3dLayout_MouseDown" MouseUp="View3dLayout_MouseUp">
+            <sky:VariableSkyView x:Name="sky">
                 <sky:VariableSkyView.Port>
-                    <sky.ports:SphereViewPort Radius="100" Background="Black" Reverse="True">
+                    <sky.ports:SphereViewPort Radius="4000" Background="Black" Reverse="True">
                         <sky.ports:SphereViewPort.Projection>
-                            <sky.projections:CylindricalProjection Radius="100" />
+                            <sky.projections:CylindricalProjection Radius="4000" />
                         </sky.ports:SphereViewPort.Projection>
                         <sky.ports:SphereViewPort.Camera>
-                            <PerspectiveCamera x:Name="camera" Position="0, 0, 0" LookDirection="0, 0, 100"/>
+                            <PerspectiveCamera Position="0, 0, 0" LookDirection="{Binding Source={StaticResource camera}, Path=Direction}"/>
                         </sky.ports:SphereViewPort.Camera>
                     </sky.ports:SphereViewPort>
                 </sky:VariableSkyView.Port>
@@ -55,7 +37,7 @@
               Height="50"
               >
             <StackPanel Name="RightControlLayout" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Name="ViewMode" Width="100" HorizontalAlignment="Right" Content="ViewMode"/>
+                <Button Name="Settings" Width="100" HorizontalAlignment="Right" Content="Settings" Click="Settings_Click"/>
                 <Button Name="Location" Width="100" HorizontalAlignment="Right" Content="Location"/>
                 <Button Name="Mesh" Width="100" HorizontalAlignment="Right" Content="Mesh"/>
             </StackPanel>
@@ -78,7 +60,7 @@
                 <Button Name="ListPanelAddButton" Content="Add" Width="50" Height="20" VerticalAlignment="Bottom" 
                         HorizontalAlignment="Right" Click="ListPanelAddButton_Click"/>
             </Grid>
-            <ListView Grid.Row="1" Name="ListView" ItemsSource="{Binding Objects}">
+            <ListView Grid.Row="1" Name="ListView" ItemsSource="{Binding}">
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Show in Map" Click="ShowSelectedItemInMap"/>

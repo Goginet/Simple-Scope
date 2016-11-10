@@ -1,6 +1,7 @@
 ﻿using Simple_Scope.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,41 +14,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Simple_Scope.Windows
-{
+namespace Simple_Scope.Windows {
     /// <summary>
     /// Interaction logic for ConstellationWindow.xaml
     /// </summary>
-    public partial class ConstellationWindow : Window, SpaceObjectEditWindow
-    {
+    public partial class ConstellationWindow : Window, SpaceObjectEditWindow {
+        private Universe _universe;
+        private Constellation _infoObject;
+
         public SaveExit Save { get; set; }
 
-        public ConstellationWindow()
-        {
+        public ConstellationWindow(Constellation infoObject) {
+            _infoObject = infoObject;
+            _universe = infoObject.Universe;
+            Resources.Add("infoObject", _infoObject);
+            Resources.Add("universe", _universe);
             InitializeComponent();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void CancelButton_Click(object sender, RoutedEventArgs e) {
             Close();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
+        private void SaveButton_Click(object sender, RoutedEventArgs e) {
             Save();
             Close();
         }
 
-        private void AddStarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Constellation infoObject = this.Resources["infoObject"] as Constellation;
-            if (infoObject != null)
-            {
-                Star newChild = infoObject.Universe.GetObjectByName(AddStarTextBox.Text.ToString()) as Star;
-                if (newChild != null)
-                {
-                    infoObject.Stars.Add(newChild);
-                }
+        private void AddStarButton_Click(object sender, RoutedEventArgs e) {
+            string objName = AddStarTextBox.Text.ToString();
+            Star newChild = _universe.GetObjectByName(objName) as Star;
+            if (!_infoObject.Children.Contains(newChild)) {
+                _infoObject.Children.Add(newChild);
             }
             AddStarTextBox.Clear();
         }

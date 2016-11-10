@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Simple_Scope.Windows"
+        xmlns:data="clr-namespace:Simple_Scope.Data"
         mc:Ignorable="d"
         Title="PlanetWindow" Height="374.134" Width="347.805">
+    <Window.Resources>
+        <local:SpaceObjectToStringConverter x:Key="parentConverter" Universe="{StaticResource universe}" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -49,7 +53,7 @@
             <Label Grid.Row="6" Grid.Column="0" Content="OrbitPeriod:" VerticalAlignment="Center" />
             <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OrbitPeriod}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
             <Label Grid.Row="7" Grid.Column="0" Content="Parent:" VerticalAlignment="Center" />
-            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Parent}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+            <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Parent, Converter={StaticResource parentConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <Button Name="SaveButton" Content="Save" Width="100" Click="SaveButton_Click"/>

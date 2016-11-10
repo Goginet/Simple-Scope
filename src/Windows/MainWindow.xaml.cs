@@ -1,7 +1,9 @@
 ﻿using Simple_Scope.Data;
+using Simple_Scope.IO;
 using SkyVisual.DrawingObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +24,7 @@ namespace Simple_Scope.Windows
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    /// 
+    ///
     public partial class MainWindow : Window
     {
         public enum ObjectsPanelType {
@@ -30,43 +32,28 @@ namespace Simple_Scope.Windows
             Stars,
             Planets,
         }
-
+        public const int ListLayoutWidth = 300;
         public const string UniverseKey = "universe";
-        public static int ListLayoutWidth = 300;
-        SphericalCamera cameraControl;
-        ObjectsPanelType currenObjectsPaneltType;
+        public const string CameraKey = "camera";
+
+        private Universe _universe;
+        private SphericalCamera _camera;
+        private ObjectsPanelType currenObjectsPaneltType;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            sky.Visible = true;
-
-            BindCamera();
+            _camera = Resources[CameraKey] as SphericalCamera;
+            _universe = Resources[UniverseKey] as Universe;
         }
 
-        public void BindCamera()
-        {
-            cameraControl = new SphericalCamera(cameraSpeed: 10, scale: 1, relativeTo: this);
-            sky.MouseDown += cameraControl.Unfix;
-            sky.MouseUp += cameraControl.Fix;
-            sky.MouseMove += cameraControl.Move;
-            sky.MouseMove += UpdateCamera;
-            cameraControl.DirectionInGrad = new Point(0, 90);
-            camera.LookDirection = cameraControl.Direction;
-        }
-
-        public void UpdateCamera(object sender, MouseEventArgs e)
-        {
-            camera.LookDirection = cameraControl.Direction;
-        }
-
-        ///////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////
+        //--------------------------------------------------------------------//
+        //                               EVENTS                               //
+        //--------------------------------------------------------------------//
 
         private void ViewStarsList_Click(object sender, RoutedEventArgs e) {
-            LoadPanel(FilterByType<Star>, ObjectsPanelType.Stars);
+            LoadPanel(FilterStars, ObjectsPanelType.Stars);
         }
 
         private void ViewConstellationList_Click(object sender, RoutedEventArgs e) {
@@ -82,27 +69,27 @@ namespace Simple_Scope.Windows
         }
 
         private void DeleteSelectedItem(object sender, RoutedEventArgs e) {
-            (this.Resources[UniverseKey] as Universe).Objects.Remove(ListView.SelectedItem as SpaceObject);
+            (this.Resources[UniverseKey] as Universe).Remove(ListView.SelectedItem as SpaceObject);
         }
 
         private void ShowSelectedItemInMap(object sender, RoutedEventArgs e) {
-            
+            Point3D point = (ListView.SelectedItem as SpaceObject).Position;
+            Point3D centre = _universe.Position;
+            _camera.Direction = point - centre;
         }
 
         private void ShowSelectedItemInfo(object sender, RoutedEventArgs e) {
             SpaceObject oldObj = ListView.SelectedItem as SpaceObject;
             SpaceObject newObj = oldObj.GetCopy();
-            Universe universe = this.Resources["universe"] as Universe;
 
             OpenInfoWindow(newObj, delegate() {
-                universe.Objects.Remove(oldObj);
-                universe.Objects.Add(newObj);
+                _universe.Remove(oldObj);
+                _universe.Add(newObj);
             });
         }
 
         private void ListPanelAddButton_Click(object sender, RoutedEventArgs e)
         {
-            Universe universe = this.Resources["universe"] as Universe;
             SpaceObject newObj = null;
 
             switch (currenObjectsPaneltType)
@@ -117,22 +104,63 @@ namespace Simple_Scope.Windows
                     newObj = new Star();
                     break;
             }
-
+            newObj.Universe = _universe;
             OpenInfoWindow(newObj, delegate ()
             {
-                universe.Objects.Add(newObj);
+                _universe.Add(newObj);
             });
         }
 
-        ///////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////
+        private void Settings_Click(object sender, RoutedEventArgs e) {
+            SettingsWindow window = new SettingsWindow();
+            window.Load = delegate (SettingsWindow.Parameters parameters) {
+                DataManager dataManager = new DataManager(new DataFile(
+                    parameters.Path,
+                    new HygCsvDataConverter(),
+                    parameters.Type,
+                    parameters.Compression
+                    ));
+                dataManager.LoadDataIn();
+                _universe = dataManager.Data;
+                this.Resources[UniverseKey] = _universe;
+                sky.ItemsSource = _universe;
+            };
+            window.Save = delegate (SettingsWindow.Parameters parameters) {
+                DataManager dataManager = new DataManager(new DataFile(
+                    parameters.Path,
+                    new HygCsvDataConverter(),
+                    parameters.Type,
+                    parameters.Compression
+                    ));
+                dataManager.Data = _universe;
+                dataManager.LoadDataOut();
+            };
+            window.Owner = this;
+            window.Show();
+        }
+
+        private void View3dLayout_MouseMove(object sender, MouseEventArgs e) {
+            _camera.Move(e.GetPosition(this));
+        }
+
+        private void View3dLayout_MouseDown(object sender, MouseButtonEventArgs e) {
+            _camera.Unfix(e.GetPosition(this));
+        }
+
+        private void View3dLayout_MouseUp(object sender, MouseButtonEventArgs e) {
+            _camera.Fix();
+        }
+
+        //--------------------------------------------------------------------//
+        //                               LOGIC                                //
+        //--------------------------------------------------------------------//
 
         private void LoadPanel(Predicate<object> filter, ObjectsPanelType panelType) {
             ListPanelLabel.Content = panelType;
             currenObjectsPaneltType = panelType;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(this.ListView.ItemsSource);
             view.Filter = filter;
+            view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             OpenPanel();
         }
 
@@ -144,34 +172,50 @@ namespace Simple_Scope.Windows
             ListLayout.Width = ListLayoutWidth;
         }
 
+        private void OpenInfoWindow(SpaceObject obj, SaveExit save)
+        {
+            Window infoWindow = null;
+            if (obj is Star)
+            {
+                infoWindow = new StarWindow(obj as Star);
+            }
+            else if (obj is Planet)
+            {
+                infoWindow = new PlanetWindow(obj as Planet);
+            }
+            else if (obj is Constellation)
+            {
+                infoWindow = new ConstellationWindow(obj as Constellation);
+            }
+            infoWindow.Owner = this;
+            (infoWindow as SpaceObjectEditWindow).Save = save;
+            infoWindow.Show();
+        }
+
+        //--------------------------------------------------------------------//
+        //                              FILTERS                               //
+        //--------------------------------------------------------------------//
+
+        public static bool FilterStars(object item) {
+            if (item is Star) {
+                if (item is StarHyg) {
+                    if ((item as StarHyg).Proper != String.Empty) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool FilterByType<T>(object item) {
             if (item is T) {
                 return true;
             }
             return false;
         }
-
-        private void OpenInfoWindow(SpaceObject obj, SaveExit save)
-        {
-            Window infoWindow = null;
-            if (obj is Star)
-            {
-                infoWindow = new StarWindow();
-            }
-            else if (obj is Planet)
-            {
-                infoWindow = new PlanetWindow();
-            }
-            else if (obj is Constellation)
-            {
-                infoWindow = new ConstellationWindow();
-            }
-            infoWindow.Resources.Add("infoObject", obj);
-            infoWindow.Owner = this;
-            (infoWindow as SpaceObjectEditWindow).Save = save;
-            infoWindow.Show();
-        }
-
-
     }
 }

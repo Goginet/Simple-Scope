@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simple_Scope.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

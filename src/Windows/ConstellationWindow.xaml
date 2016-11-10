@@ -47,7 +47,7 @@
                     <TextBox Name="AddStarTextBox" />
                     <Button Name="AddStarButton" Grid.Column="1" Content="Add Planet" Click="AddStarButton_Click"/>
                 </Grid>
-                <ListView x:Name="PlanetsListView" Grid.Row="1" ItemsSource="{Binding Stars}" />
+                <ListView x:Name="PlanetsListView" Grid.Row="1" ItemsSource="{Binding Children}" />
         </Grid>
         <Grid Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>

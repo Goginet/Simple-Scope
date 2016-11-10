@@ -6,7 +6,10 @@
         xmlns:data="clr-namespace:Simple_Scope.Data"
         xmlns:local="clr-namespace:Simple_Scope.Windows"
         mc:Ignorable="d"
-        Title="Window1" Height="379.677" Width="300">
+        Title="Window1" Height="466.485" Width="361.38">
+    <Window.Resources>
+        <local:SpaceObjectToStringConverter x:Key="parentConverter" Universe="{StaticResource universe}" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -16,6 +19,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="40" />
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition />
@@ -29,18 +35,24 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Position:" VerticalAlignment="Center" />
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label Content="X:"/>
-            <TextBox Text="{Binding X}" MinWidth="35" MaxWidth="40" />
+            <TextBox Text="{Binding X}" MinWidth="40" />
             <Label Content="Y:" Margin="10, 0"/>
-            <TextBox Text="{Binding Y}" MinWidth="35" MaxWidth="40" />
+            <TextBox Text="{Binding Y}" MinWidth="40" />
             <Label Content="Z:" Margin="10, 0"/>
-            <TextBox Text="{Binding Z}" MinWidth="35" MaxWidth="40" />
+            <TextBox Text="{Binding Z}" MinWidth="40" />
         </StackPanel>
-        <Label Grid.Row="2" Grid.Column="0" Content="Weight:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Weight}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="3" Grid.Column="0" Content="Luminosity:" VerticalAlignment="Center" />
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Luminosity}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="4" Grid.Column="0" Content="Planets:" VerticalAlignment="Center" />
-        <Grid Grid.Row="4" Grid.Column="1" VerticalAlignment="Stretch">
+        <Label Grid.Row="2" Grid.Column="0" Content="Luminosity:" VerticalAlignment="Center" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Luminosity}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+        <Label Grid.Row="3" Grid.Column="0" Content="AbsoluteMagnitude:" VerticalAlignment="Center" />
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AbsoluteMagnitude, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+        <Label Grid.Row="4" Grid.Column="0" Content="ApparentMagnitude:" VerticalAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ApparentMagnitude, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+        <Label Grid.Row="5" Grid.Column="0" Content="Distance:" VerticalAlignment="Center" />
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
+        <Label Grid.Row="6" Grid.Column="0" Content="Parent:" VerticalAlignment="Center" />
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Parent, Converter={StaticResource parentConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+        <Label Grid.Row="7" Grid.Column="0" Content="Planets:" VerticalAlignment="Center" />
+        <Grid Grid.Row="7" Grid.Column="1" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
@@ -53,7 +65,7 @@
                 <TextBox Name="AddPlanetTextBox" />
                 <Button Grid.Column="1" Grid.Row="0"  Name="AddPlanetButton" Content="Add Planet" Click="AddPlanetButton_Click"/>
             </Grid>
-            <ListView x:Name="PlanetsListView" Grid.Row="1" ItemsSource="{Binding Planets}" />
+            <ListView x:Name="PlanetsListView" Grid.Row="1" ItemsSource="{Binding Children}" />
         </Grid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simple_Scope.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,10 @@ namespace Simple_Scope.Windows
     {
         public SaveExit Save { get; set; }
 
-        public PlanetWindow()
+        public PlanetWindow(Planet infoObject)
         {
+            Resources.Add("infoObject", infoObject);
+            Resources.Add("universe", infoObject.Universe);
             InitializeComponent();
         }
 

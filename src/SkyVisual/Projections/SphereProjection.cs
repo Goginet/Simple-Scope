@@ -35,6 +35,36 @@ namespace SkyVisual.Projections
             return FromSphereToPlace(new Point(alpha, delta));
         }
 
+        public double GetLengthX(Point3D point, double length)
+        {
+            double R = Math.Sqrt(Math.Pow(point.X, 2) + Math.Pow(point.Z, 2));
+            double R2 = Math.Sqrt(Math.Pow(R, 2) + Math.Pow(point.Y, 2));
+
+            double delta = Math.Acos(point.Y / R2);
+
+            double r = Radius * Math.Sin(delta);
+            
+            double a = length / ( 2 * r);
+
+            double tan = Math.Tan(a);
+
+            return Radius * Math.Tan(a) * 2;
+        }
+
+        public double GetLengthY(Point3D point, double length)
+        {
+            double R = Math.Sqrt(Math.Pow(point.X, 2) + Math.Pow(point.Z, 2));
+            double R2 = Math.Sqrt(Math.Pow(R, 2) + Math.Pow(point.Y, 2));
+
+            double delta = Math.Asin(point.Y / R2);
+
+            double a = length / (2 * Radius);
+
+            double L = Radius * Math.Tan(a) * 2;
+
+            return L * Math.Cos(delta);
+        }
+
         public abstract Point FromSphereToPlace(Point point);
     }
 }

@@ -11,7 +11,7 @@ namespace SkyVisual.DrawingObjects
 {
     public class SkyDrawingPoint : SkyDrawingObject
     {
-        public double Radius { get; set; } = 0.2;
+        public double Radius { get; set; } = 15;
         public Point3D Position { get; set; }
         public SolidColorBrush Brush { get; set; }
 
@@ -25,8 +25,13 @@ namespace SkyVisual.DrawingObjects
 
         public override Drawing Draw(Projection projection)
         {
-            // TODO: throws exeptions!!!!!!!!!!!!!!!!
-            EllipseGeometry geometry = new EllipseGeometry(projection.Get2D(Position), Radius, Radius);
+            double radiusX = Radius, radiusY = Radius;
+            if (projection is SphereProjection)
+            {
+                radiusX = (projection as SphereProjection).GetLengthX(Position, Radius);
+                radiusY = (projection as SphereProjection).GetLengthY(Position, Radius);
+            }
+            EllipseGeometry geometry = new EllipseGeometry(projection.Get2D(Position), radiusX, radiusY);
             return new GeometryDrawing(Brush, null, geometry);
         }
     }

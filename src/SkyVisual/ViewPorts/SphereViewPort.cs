@@ -80,6 +80,7 @@ namespace SkyVisual.ViewPorts
             mesh.Reverse = Reverse;
 
             DrawingBrush brush = new DrawingBrush(DrawField(objects));
+            RenderOptions.SetCachingHint(brush, CachingHint.Cache);
             DiffuseMaterial material = new DiffuseMaterial(brush);
 
             GeometryModel3D model = new GeometryModel3D(mesh.Mesh, material);
@@ -116,7 +117,10 @@ namespace SkyVisual.ViewPorts
 
             foreach (SkyDrawingObject obj in objects)
             {
-                field.Children.Add(obj.Draw(Projection));
+                if (obj != null)
+                {
+                    field.Children.Add(obj.Draw(Projection));
+                }
             }
 
             return field;

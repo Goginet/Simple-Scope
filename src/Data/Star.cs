@@ -12,81 +12,78 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 
 namespace Simple_Scope.Data {
-    public class Star: SpaceObject, IEnumerable<Planet>, ISkyDrawingObject
-    {
+
+    
+
+    public class Star : SpaceObject, IEnumerable<Planet>, ISkyDrawingObject {
         private ObservableCollection<Planet> _planets;
         private Constellation _parent;
         private string _saveParentName;
-        private double _weight;
-        private double _luminosity;
+        private double _apparentMagnitude;
+        private double _absoluteMagnitude;
+
         private SkyDrawingObject _skyDrawing;
 
-        public Star(): base() {
+        private double _luminosity;
+
+        public Star() : base() {
             _planets = new ObservableCollection<Planet>();
         }
 
-        public Star(string name, Point3D position): base(name, position) {
-            _planets = new ObservableCollection<Planet>();
-        }
-
-        public override SpaceObject GetCopy()
-        {
-            Star copy = new Star(Name, Position);
-            foreach(Planet planet in Planets)
-            {
-                copy.Planets.Add(planet);
+        public override SpaceObject GetCopy() {
+            Star copy = new Star();
+            copy.Name = Name;
+            copy.Position = Position;
+            foreach (Planet child in Children) {
+                copy.Children.Add(child);
             }
             copy.Parent = Parent;
-            copy.Weight = Weight;
+            copy._saveParentName = _saveParentName;
             copy.Luminosity = Luminosity;
             copy.Universe = Universe;
             return copy;
         }
 
-        public ObservableCollection<Planet> Planets {
+        public override void Destroy() {
+            foreach (Planet child in Children) {
+                child.Parent = null;
+            }
+            if (_parent != null) {
+                _parent.Children.Remove(this);
+            }
+        }
+
+        public override void Save() {
+            foreach (Planet child in Children) {
+                child.Parent = this;
+            }
+            if (_parent != null) {
+                _parent.Children.Add(this);
+            }
+        }
+
+        public Constellation Parent {
+            set { _parent = value; }
+            get { return _parent; }
+        }
+
+        public ICollection<Planet> Children {
             get { return _planets; }
         }
 
-        public double Luminosity
-        {
-            get { return _luminosity; }
-            set { _luminosity = value; }
-        }
-
-        public double Weight
-        {
-            get { return _weight; }
-            set { _weight = value; }
-        }
-
-        public override Universe Universe {
-            set {
-                base.Universe = value;
-                Parent = _saveParentName;
-            }
-        }
-
-        public string Parent {
-            set {
-                if (Universe == null) {
-                    _saveParentName = value;
-                } else {
-                    Constellation parent = (Universe.GetObjectByName(value) as Constellation);
-                    if (_parent != null) {
-                        _parent.Stars.Remove(this);
-                    }
-                    _parent = parent;
-                    if (_parent != null) {
-                        _parent.Stars.Add(this);
-                    }
+        public virtual SkyDrawingObject SkyDrawingObject {
+            get {
+                if (_skyDrawing == null) {
+                    double x = ApparentMagnitude;
+                    double R = (-2 * x) + 12;
+                    SkyDrawingPoint skyDrawing = new SkyDrawingPoint();
+                    skyDrawing.Position = Position;
+                    skyDrawing.Radius = R;
+                    skyDrawing.Brush = new SolidColorBrush(Colors.White);
+                    _skyDrawing = skyDrawing;
                 }
+                return _skyDrawing;
             }
-            get { return _parent.Name; }
-        }
-
-        public override void Destroy() {
-            base.Destroy();
-            _parent.Stars.Remove(this);
         }
 
         public IEnumerator<Planet> GetEnumerator() {
@@ -97,18 +94,38 @@ namespace Simple_Scope.Data {
             return ((IEnumerable<Planet>)_planets).GetEnumerator();
         }
 
-        public SkyDrawingObject SkyDrawingObject
-        {
-            get
-            {
-                if(_skyDrawing == null) {
-                    SkyDrawingPoint skyDrawing = new SkyDrawingPoint();
-                    skyDrawing.Position = Position;
-                    skyDrawing.Brush = new SolidColorBrush(Colors.White);
-                    _skyDrawing = skyDrawing;
-                }
-                return _skyDrawing;
+        public double Luminosity {
+            get { return _luminosity; }
+            set { _luminosity = value; }
+        }
+
+        public double ApparentMagnitude {
+            get {
+                double M = AbsoluteMagnitude;
+                double d = Distance;
+                double d0 = 32.616;
+                double m = M + 5 * Math.Log10(d / d0);
+                return m;
             }
         }
+
+        public double AbsoluteMagnitude {
+            get {
+                double M0 = 4.83;
+                double M = M0 - (Math.Log10(Luminosity) / 0.4);
+                return M;
+            }
+        }
+        
+        public double Distance {
+            get {
+                double X0 = Universe.Position.X;
+                double Y0 = Universe.Position.Y;
+                double Z0 = Universe.Position.Z;
+                return Math.Sqrt((Math.Pow(X - X0, 2) + Math.Pow(Y - Y0, 2) + Math.Pow(Z - Z0, 2))) * 3.26156;
+            }
+        }
+
+        public string ParentBuffer { get; set; }
     }
 }
