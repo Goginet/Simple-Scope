@@ -50,7 +50,7 @@ namespace Simple_Scope.Windows
         {
             string objName = AddPlanetTextBox.Text.ToString();
             Planet newChild = _universe.GetObjectByName(objName) as Planet;
-            if (!_infoObject.Children.Contains(newChild)) {
+            if (newChild != null && !_infoObject.Children.Contains(newChild)) {
                 _infoObject.Children.Add(newChild);
             }
             AddPlanetTextBox.Clear();

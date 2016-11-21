@@ -5,10 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simple_Scope.IO
-{
-    public class HygCsvDataConverter : DataConverter
-    {
+namespace Simple_Scope.IO {
+    public class HygCsvDataConverter {
         public enum StarColumns {
             ID = 0,
             HIP = 1,
@@ -45,14 +43,12 @@ namespace Simple_Scope.IO
         public static readonly int PlanetPropertiesCount = 10;
         public static readonly int ConstellationPropertiesCount = 1;
 
-        public SpaceObject ConvertFromString(Universe universe, string str)
-        {
+        public SpaceObject ConvertFromString(string str) {
             SpaceObject obj = null;
 
             string[] fields = str.Split(separator);
 
-            if (fields.Length == StarPropertiesCount)
-            {
+            if (fields.Length == StarPropertiesCount) {
                 StarHyg readStar = new StarHyg();
 
                 int hip, hd, hr;
@@ -69,7 +65,6 @@ namespace Simple_Scope.IO
                 readStar.Gl = fields[(int)StarColumns.GL];
                 readStar.Bf = fields[(int)StarColumns.BF];
                 readStar.Proper = fields[(int)StarColumns.Proper];
-                readStar.ParentBuffer = fields[(int)StarColumns.Con];
                 readStar.Hip = hip;
                 readStar.Hd = hd;
                 readStar.Hr = hr;
@@ -81,7 +76,7 @@ namespace Simple_Scope.IO
                 obj = readStar;
             } else if (fields.Length == PlanetPropertiesCount) {
                 Planet planet = new Planet();
-                
+
                 double x, y, z, radius, orbitRadius, axisPeriod, orbitPeriod, weight;
                 Double.TryParse(fields[(int)PlanetColumns.X], out x);
                 Double.TryParse(fields[(int)PlanetColumns.Y], out y);
@@ -112,11 +107,9 @@ namespace Simple_Scope.IO
             return obj;
         }
 
-        public string ConvertToString(SpaceObject obj)
-        {
+        public string ConvertToString(SpaceObject obj) {
             string str = "";
-            if (obj is Star)
-            {
+            if (obj is Star) {
                 StarHyg star = star = obj as StarHyg;
                 if (!(obj is StarHyg)) {
                     star = new StarHyg();
@@ -155,7 +148,7 @@ namespace Simple_Scope.IO
                     "" + separator[0] +
                     "" + separator[0] +
                     "" + separator[0] +
-                    ((star.Parent != null) ? star.Parent.Name:"") + separator[0] +
+                    ((star.Parent != null) ? star.Parent.Name : "") + separator[0] +
                     "" + separator[0] +
                     "" + separator[0] +
                     "" + separator[0] +
@@ -184,4 +177,3 @@ namespace Simple_Scope.IO
         }
     }
 }
-

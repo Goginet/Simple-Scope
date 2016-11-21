@@ -53,7 +53,7 @@ namespace Simple_Scope.Windows
         //--------------------------------------------------------------------//
 
         private void ViewStarsList_Click(object sender, RoutedEventArgs e) {
-            LoadPanel(FilterStars, ObjectsPanelType.Stars);
+            LoadPanel(FilterByType<Star>, ObjectsPanelType.Stars);
         }
 
         private void ViewConstellationList_Click(object sender, RoutedEventArgs e) {
@@ -70,6 +70,7 @@ namespace Simple_Scope.Windows
 
         private void DeleteSelectedItem(object sender, RoutedEventArgs e) {
             (this.Resources[UniverseKey] as Universe).Remove(ListView.SelectedItem as SpaceObject);
+            sky.ItemsSource = _universe;
         }
 
         private void ShowSelectedItemInMap(object sender, RoutedEventArgs e) {
@@ -85,6 +86,7 @@ namespace Simple_Scope.Windows
             OpenInfoWindow(newObj, delegate() {
                 _universe.Remove(oldObj);
                 _universe.Add(newObj);
+                sky.ItemsSource = _universe;
             });
         }
 
@@ -108,6 +110,7 @@ namespace Simple_Scope.Windows
             OpenInfoWindow(newObj, delegate ()
             {
                 _universe.Add(newObj);
+                sky.ItemsSource = _universe;
             });
         }
 
@@ -116,7 +119,6 @@ namespace Simple_Scope.Windows
             window.Load = delegate (SettingsWindow.Parameters parameters) {
                 DataManager dataManager = new DataManager(new DataFile(
                     parameters.Path,
-                    new HygCsvDataConverter(),
                     parameters.Type,
                     parameters.Compression
                     ));
@@ -128,7 +130,6 @@ namespace Simple_Scope.Windows
             window.Save = delegate (SettingsWindow.Parameters parameters) {
                 DataManager dataManager = new DataManager(new DataFile(
                     parameters.Path,
-                    new HygCsvDataConverter(),
                     parameters.Type,
                     parameters.Compression
                     ));
@@ -196,23 +197,8 @@ namespace Simple_Scope.Windows
         //                              FILTERS                               //
         //--------------------------------------------------------------------//
 
-        public static bool FilterStars(object item) {
-            if (item is Star) {
-                if (item is StarHyg) {
-                    if ((item as StarHyg).Proper != String.Empty) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static bool FilterByType<T>(object item) {
-            if (item is T) {
+        public static bool FilterByType<T>(object item) where T: SpaceObject {
+            if (item is T && (item as SpaceObject).Name != "NoName") {
                 return true;
             }
             return false;

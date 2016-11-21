@@ -7,6 +7,7 @@ using SkyVisual.DrawingObjects;
 
 namespace Simple_Scope.Data
 {
+    [Serializable]
     public class StarHyg: Star
     { 
         private int _hip;
@@ -66,18 +67,6 @@ namespace Simple_Scope.Data
                 } else {
                     return "NoName";
                 }
-            }
-        }
-
-        public override SkyDrawingObject SkyDrawingObject
-        {
-            get
-            {
-                if (Proper != String.Empty)
-                {
-                    return base.SkyDrawingObject;
-                }
-                return null;
             }
         }
     }

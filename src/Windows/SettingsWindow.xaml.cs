@@ -49,8 +49,10 @@ namespace Simple_Scope.Windows {
                 parameters.Type = DataFile.FileType.Text;
             } else if (this.binary.IsChecked == true) {
                 parameters.Type = DataFile.FileType.Binary;
+            } else if (this.binaryModify.IsChecked == true) {
+                parameters.Type = DataFile.FileType.BinaryModify;
             }
-            return parameters;
+                return parameters;
         }
 
         private void loadButton_Click(object sender, RoutedEventArgs e) {

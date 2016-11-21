@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Simple_Scope.Windows"
         mc:Ignorable="d"
-        Title="ConstellationWindow" Height="400.461" Width="306.928">
+        Title="ConstellationWindow" Height="400.461" Width="333.749">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

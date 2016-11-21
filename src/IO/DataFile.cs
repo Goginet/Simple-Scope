@@ -10,18 +10,17 @@ namespace Simple_Scope.IO
     {
         public enum FileType {
             Binary,
+            BinaryModify,
             Text
         }
 
         public string DataFilePath { get; set; }
-        public DataConverter Converter { get; set; }
         public FileType Type { get; set; }
         public bool Compression { get; set; }
 
-        public DataFile(string dataFilePath, DataConverter converter, FileType type, bool compression)
+        public DataFile(string dataFilePath, FileType type, bool compression)
         {
             DataFilePath = dataFilePath;
-            Converter = converter;
             Type = type;
             Compression = compression;
         }

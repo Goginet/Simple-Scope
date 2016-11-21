@@ -12,17 +12,11 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 
 namespace Simple_Scope.Data {
-
-    
-
+    [Serializable]
     public class Star : SpaceObject, IEnumerable<Planet>, ISkyDrawingObject {
         private ObservableCollection<Planet> _planets;
         private Constellation _parent;
         private string _saveParentName;
-        private double _apparentMagnitude;
-        private double _absoluteMagnitude;
-
-        private SkyDrawingObject _skyDrawing;
 
         private double _luminosity;
 
@@ -73,16 +67,16 @@ namespace Simple_Scope.Data {
 
         public virtual SkyDrawingObject SkyDrawingObject {
             get {
-                if (_skyDrawing == null) {
-                    double x = ApparentMagnitude;
-                    double R = (-2 * x) + 12;
-                    SkyDrawingPoint skyDrawing = new SkyDrawingPoint();
-                    skyDrawing.Position = Position;
-                    skyDrawing.Radius = R;
-                    skyDrawing.Brush = new SolidColorBrush(Colors.White);
-                    _skyDrawing = skyDrawing;
+                double x = ApparentMagnitude;
+                if (ApparentMagnitude > 5) {
+                    return null;
                 }
-                return _skyDrawing;
+                double R = (-2 * x) + 12;
+                SkyDrawingPoint skyDrawing = new SkyDrawingPoint();
+                skyDrawing.Position = Position;
+                skyDrawing.Radius = R;
+                skyDrawing.Brush = new SolidColorBrush(Colors.White);
+                return skyDrawing;
             }
         }
 

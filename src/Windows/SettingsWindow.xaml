@@ -26,9 +26,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <RadioButton Grid.Column="0" GroupName="FileType" Name="binary" Content="Binary" HorizontalAlignment="Center"/>
             <RadioButton Grid.Column="1" GroupName="FileType" Name="text" Content="Text" HorizontalAlignment="Center" IsChecked="True"/>
+            <RadioButton Grid.Column="2" GroupName="FileType" Name="binaryModify" Content="BinaryModify" HorizontalAlignment="Center" IsChecked="True"/>
         </Grid>
         <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal" >
             <Button Name="saveButton" Content="Save" Width="70" Click="saveButton_Click"/>

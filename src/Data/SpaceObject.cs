@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Media.Media3D;
 
 namespace Simple_Scope.Data {
+    [Serializable]
     public abstract class SpaceObject {
         public virtual string Name { get; set; }
         public Universe Universe { get; set; }

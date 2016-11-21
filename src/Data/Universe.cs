@@ -4,19 +4,29 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
 namespace Simple_Scope.Data {
+    [Serializable]
     public class Universe: ICollection<SpaceObject>, INotifyCollectionChanged {
         public Point3D Position { get; set; }
+        private ObservableCollection<SpaceObject> _objects;
+        [field: NonSerialized]
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-        private List<SpaceObject> _objects;
-
         public Universe() {
-            _objects = new List<SpaceObject>();
+            _objects = new ObservableCollection<SpaceObject>();
+            _objects.CollectionChanged += Chenge;
+        }
+
+        [OnDeserialized]
+        internal void Init(StreamingContext context) {
+            if (_objects != null) {
+                _objects.CollectionChanged += Chenge;
+            }
         }
 
         public SpaceObject GetObjectByName(string name) {
@@ -26,6 +36,34 @@ namespace Simple_Scope.Data {
                 }
             }
             return null;
+        }
+
+        public void InsertObjects(IEnumerable<SpaceObject> objects)
+        {
+            _objects = new ObservableCollection<SpaceObject>(objects);
+            _objects.CollectionChanged += Chenge;
+        }
+
+        public void Chenge(object sender, NotifyCollectionChangedEventArgs e) {
+            CollectionChanged?.Invoke(sender, e);
+            if (e.Action == NotifyCollectionChangedAction.Add) {
+                foreach (SpaceObject obj in e.NewItems) {
+                    obj.Save();
+                }
+            }
+            if (e.Action == NotifyCollectionChangedAction.Remove) {
+                foreach (SpaceObject obj in e.OldItems) {
+                    obj.Destroy();
+                }
+            }
+        }
+
+        public IEnumerator<SpaceObject> GetEnumerator() {
+            return ((IEnumerable<SpaceObject>)_objects).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return ((IEnumerable<SpaceObject>)_objects).GetEnumerator();
         }
 
         public int Count {
@@ -42,16 +80,10 @@ namespace Simple_Scope.Data {
 
         public void Add(SpaceObject item) {
             ((ICollection<SpaceObject>)_objects).Add(item);
-            item.Save();
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public void Clear() {
-            foreach (SpaceObject obj in _objects) {
-                obj.Destroy();
-            }
             ((ICollection<SpaceObject>)_objects).Clear();
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public bool Contains(SpaceObject item) {
@@ -63,20 +95,7 @@ namespace Simple_Scope.Data {
         }
 
         public bool Remove(SpaceObject item) {
-            bool ok = ((ICollection<SpaceObject>)_objects).Remove(item);
-            if (ok) {
-                item.Destroy();
-                CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            }
-            return ok;
-        }
-
-        public IEnumerator<SpaceObject> GetEnumerator() {
-            return ((ICollection<SpaceObject>)_objects).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() {
-            return ((ICollection<SpaceObject>)_objects).GetEnumerator();
+            return ((ICollection<SpaceObject>)_objects).Remove(item);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Simple_Scope.Windows {
         private void AddStarButton_Click(object sender, RoutedEventArgs e) {
             string objName = AddStarTextBox.Text.ToString();
             Star newChild = _universe.GetObjectByName(objName) as Star;
-            if (!_infoObject.Children.Contains(newChild)) {
+            if (newChild != null && !_infoObject.Children.Contains(newChild)) {
                 _infoObject.Children.Add(newChild);
             }
             AddStarTextBox.Clear();

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Simple_Scope.Windows"
         xmlns:data="clr-namespace:Simple_Scope.Data"
         mc:Ignorable="d"
-        Title="PlanetWindow" Height="374.134" Width="347.805">
+        Title="PlanetWindow" Height="374.134" Width="367.678">
     <Window.Resources>
         <local:SpaceObjectToStringConverter x:Key="parentConverter" Universe="{StaticResource universe}" />
     </Window.Resources>

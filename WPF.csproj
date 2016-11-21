@@ -68,6 +68,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -86,13 +87,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="src\Data\HygCsvDataConverter.cs" />
     <Compile Include="src\Data\StarHyg.cs" />
-    <Compile Include="src\IO\DataConverter.cs" />
     <Compile Include="src\IO\DataFile.cs" />
     <Compile Include="src\IO\DataManager.cs" />
     <Compile Include="src\Data\Constellation.cs" />
-    <Compile Include="src\IO\DefaultTxtDataConverter.cs" />
-    <Compile Include="src\IO\HygCsvDataConverter.cs" />
+    <Compile Include="src\IO\MyBinaryFormatter.cs" />
+    <Compile Include="src\IO\MyFormatter.cs" />
     <Compile Include="src\Windows\ConstellationWindow.xaml.cs">
       <DependentUpon>ConstellationWindow.xaml</DependentUpon>
     </Compile>

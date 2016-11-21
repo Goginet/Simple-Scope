@@ -7,6 +7,7 @@ using System.Windows.Media.Media3D;
 
 namespace Simple_Scope.Data
 {
+    [Serializable]
     public class Planet: SpaceObject
     {
         private double _radius;
