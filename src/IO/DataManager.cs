@@ -25,13 +25,10 @@ namespace Simple_Scope.IO
             _dataFile = dataFile;
             switch (_dataFile.Type) {
                 case DataFile.FileType.Binary:
-                    formatter = new MyBinaryFormatter();
+                    formatter = new BinaryFormatter();
                     break;
                 case DataFile.FileType.Text:
-                    formatter = new MyFormatter();
-                    break;
-                case DataFile.FileType.BinaryModify:
-                    formatter = new BinaryFormatter();
+                    formatter = new JsonFormatter();
                     break;
             }
         }
@@ -46,11 +43,12 @@ namespace Simple_Scope.IO
             using (Stream stream = new FileStream(_dataFile.DataFilePath, FileMode.Open)) {
                 if (_dataFile.Compression) {
                     using (Stream decompress = new GZipStream(stream, CompressionMode.Decompress)) {
-                        data = formatter.Deserialize(decompress) as Universe;       
+                        data = formatter.Deserialize(decompress) as Universe;
                     }
-                }  else {
+                } else {
                     data = formatter.Deserialize(stream) as Universe;
                 }
+                data.Init();
             }
             if (data == null) {
                 MessageBox.Show("Parse Error!");

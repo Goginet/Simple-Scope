@@ -69,17 +69,22 @@ namespace Simple_Scope.Windows
         }
 
         private void DeleteSelectedItem(object sender, RoutedEventArgs e) {
-            (this.Resources[UniverseKey] as Universe).Remove(ListView.SelectedItem as SpaceObject);
+            _universe.Remove(ListView.SelectedItem as SpaceObject);
+            this.Resources[UniverseKey] = _universe;
             sky.ItemsSource = _universe;
         }
 
         private void ShowSelectedItemInMap(object sender, RoutedEventArgs e) {
+            if (ListView.SelectedItem == null) return;
+
             Point3D point = (ListView.SelectedItem as SpaceObject).Position;
             Point3D centre = _universe.Position;
             _camera.Direction = point - centre;
         }
 
         private void ShowSelectedItemInfo(object sender, RoutedEventArgs e) {
+            if (ListView.SelectedItem == null) return;
+
             SpaceObject oldObj = ListView.SelectedItem as SpaceObject;
             SpaceObject newObj = oldObj.GetCopy();
 

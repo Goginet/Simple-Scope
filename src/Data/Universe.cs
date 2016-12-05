@@ -21,9 +21,8 @@ namespace Simple_Scope.Data {
             _objects = new ObservableCollection<SpaceObject>();
             _objects.CollectionChanged += Chenge;
         }
-
-        [OnDeserialized]
-        internal void Init(StreamingContext context) {
+        
+        public void Init() {
             if (_objects != null) {
                 _objects.CollectionChanged += Chenge;
             }
