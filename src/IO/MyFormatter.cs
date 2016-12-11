@@ -148,50 +148,55 @@ namespace Simple_Scope.IO {
             ObjectsBufferLoad objectsBuffer = new ObjectsBufferLoad();
             JsonTextReader reader = new JsonTextReader(new StreamReader(serializationStream));
 
-            while (reader.Read() && reader.TokenType != JsonToken.EndObject) {
-                if (reader.TokenType == JsonToken.PropertyName) {
-                    if (reader.Value.Equals(fieldRoot) && reader.Read()) {
-                        objectsBuffer.RootRef = ToRefIndex(reader.Value);
-                    } else if (reader.Value.Equals(fieldArrayElements) && reader.Read()) {
-                        while (reader.Read() && reader.TokenType != JsonToken.EndArray) {
-                            if (reader.TokenType == JsonToken.StartObject) {
-                                JsonOutputObject outputObj = ReadJsonObject(reader);
-                                objectsBuffer.Objects.Add(outputObj.RefIndex, outputObj.Object);
-                                foreach (Link link in outputObj.Links) {
-                                    objectsBuffer.Links.Add(link);
+            try {
+                while (reader.Read() && reader.TokenType != JsonToken.EndObject) {
+                    if (reader.TokenType == JsonToken.PropertyName) {
+                        if (reader.Value.Equals(fieldRoot) && reader.Read()) {
+                            objectsBuffer.RootRef = ToRefIndex(reader.Value);
+                        } else if (reader.Value.Equals(fieldArrayElements) && reader.Read()) {
+                            while (reader.Read() && reader.TokenType != JsonToken.EndArray) {
+                                if (reader.TokenType == JsonToken.StartObject) {
+                                    JsonOutputObject outputObj = ReadJsonObject(reader);
+                                    objectsBuffer.Objects.Add(outputObj.RefIndex, outputObj.Object);
+                                    foreach (Link link in outputObj.Links) {
+                                        objectsBuffer.Links.Add(link);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            foreach (Link link in objectsBuffer.Links) {
-                object value;
-                if (link is LinkToField) {
-                    LinkToField linkToField = link as LinkToField;
-                    if (objectsBuffer.Objects.TryGetValue(linkToField.RefIndex, out value)) {
-                        try {
-                            linkToField.Field.SetValue(link.Obj, value);
+                foreach (Link link in objectsBuffer.Links) {
+                    object value;
+                    if (link is LinkToField) {
+                        LinkToField linkToField = link as LinkToField;
+                        if (objectsBuffer.Objects.TryGetValue(linkToField.RefIndex, out value)) {
+                            try {
+                                linkToField.Field.SetValue(link.Obj, value);
+                            }
+                            catch (Exception e) {
+
+                            }
                         }
-                        catch (Exception e) {
+                    } else if (link is LinkToArrayEl) {
+                        LinkToArrayEl linkToArrayEl = link as LinkToArrayEl;
+                        Array arr = linkToArrayEl.Obj as Array;
+                        if (objectsBuffer.Objects.TryGetValue(link.RefIndex, out value)) {
+                            try {
+                                arr.SetValue(value, linkToArrayEl.Indexes);
+                            }
+                            catch (Exception e) {
 
-                        }
-                    }
-                } else if (link is LinkToArrayEl) {
-                    LinkToArrayEl linkToArrayEl = link as LinkToArrayEl;
-                    Array arr = linkToArrayEl.Obj as Array;
-                    if (objectsBuffer.Objects.TryGetValue(link.RefIndex, out value)) {
-                        try {
-                            arr.SetValue(value, linkToArrayEl.Indexes);
-                        } catch (Exception e) {
-
+                            }
                         }
                     }
                 }
-            }
 
-            return objectsBuffer.RootObject;
+                return objectsBuffer.RootObject;
+            } catch (Exception) {
+                return null;
+            }
         }
 
         private void WriteObject(object obj, bool isBase, Type type, JsonTextWriter writer, ObjectsBufferSave objectsBuffer) {
