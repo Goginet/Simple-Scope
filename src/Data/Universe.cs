@@ -29,12 +29,17 @@ namespace Simple_Scope.Data {
         }
 
         public SpaceObject GetObjectByName(string name) {
-            foreach(SpaceObject obj in _objects) {
-                if (obj.Name == name) {
-                    return obj;
-                }
-            }
-            return null;
+            return _objects.Where(x => x.Name == name).FirstOrDefault();
+            //foreach(SpaceObject obj in _objects) {
+            //    if (obj.Name == name) {
+            //        return obj;
+            //    }
+            //}
+            // return null;
+        }
+
+        public SpaceObject GetStarByName(string name) {
+            return _objects.Where(x => x.Name == name).OfType<Star>().FirstOrDefault();
         }
 
         public void InsertObjects(IEnumerable<SpaceObject> objects)
@@ -58,11 +63,11 @@ namespace Simple_Scope.Data {
         }
 
         public IEnumerator<SpaceObject> GetEnumerator() {
-            return ((IEnumerable<SpaceObject>)_objects).GetEnumerator();
+            return _objects.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
-            return ((IEnumerable<SpaceObject>)_objects).GetEnumerator();
+            return _objects.GetEnumerator();
         }
 
         public int Count {
@@ -95,6 +100,10 @@ namespace Simple_Scope.Data {
 
         public bool Remove(SpaceObject item) {
             return ((ICollection<SpaceObject>)_objects).Remove(item);
+        }
+
+        public IEnumerable<SpaceObject> GetStars() {
+            return _objects.OfType<Star>();
         }
     }
 }
