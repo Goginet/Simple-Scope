@@ -22,18 +22,18 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Name:" VerticalAlignment="Center" />
+            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource constellation_window_name_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="1" Grid.Column="0" Content="Position:" VerticalAlignment="Center" />
+            <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource constellation_window_position_label}" VerticalAlignment="Center" />
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding Position}">
-            <Label Content="X:"/>
+            <Label Content="{DynamicResource constellation_window_position_x_label}"/>
             <TextBox Text="{Binding X}" MinWidth="35" MaxWidth="40" />
-            <Label Content="Y:" Margin="10, 0"/>
+            <Label Content="{DynamicResource constellation_window_position_y_label}" Margin="10, 0"/>
             <TextBox Text="{Binding Y}" MinWidth="35" MaxWidth="40" />
-            <Label Content="Z:" Margin="10, 0"/>
+            <Label Content="{DynamicResource constellation_window_position_z_label}" Margin="10, 0"/>
             <TextBox Text="{Binding Z}" MinWidth="35" MaxWidth="40" />
         </StackPanel>
-        <Label Grid.Row="2" Grid.Column="0" Content="Stars:" VerticalAlignment="Center" />
+        <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource constellation_window_stars_label}" VerticalAlignment="Center" />
         <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -42,10 +42,10 @@
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBox Name="AddStarTextBox" />
-                    <Button Name="AddStarButton" Grid.Column="1" Content="Add Planet" Click="AddStarButton_Click"/>
+                    <Button Name="AddStarButton" Grid.Column="1" Content="{DynamicResource constellation_window_add_star_button}" Click="AddStarButton_Click"/>
                 </Grid>
                 <ListView x:Name="PlanetsListView" Grid.Row="1" ItemsSource="{Binding Children}" />
         </Grid>
@@ -54,13 +54,13 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0"  Name="AddVectorButton" Content="Add Vector" HorizontalAlignment="Right" />
+            <Button Grid.Row="0"  Name="AddVectorButton" Content="{DynamicResource constellation_window_add_vector_button}" HorizontalAlignment="Right" />
             <Canvas x:Name="Canvas" Grid.Row="1" />
         </Grid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Button Name="SaveButton" Content="Save" Width="100" Click="SaveButton_Click"/>
-            <Button Name="CancelButton" Content="Cancel" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
+            <Button Name="SaveButton" Content="{DynamicResource constellation_window_save_button}" Width="100" Click="SaveButton_Click"/>
+            <Button Name="CancelButton" Content="{DynamicResource constellation_window_cancel_button}" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
         </StackPanel>
     </Grid>
 </Window>

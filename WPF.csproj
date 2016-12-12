@@ -135,6 +135,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\Windows\SpaceObjectToStringConverter.cs" />
+    <Page Include="Resources\lang.ru-Ru.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\lang.en-En.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="src\Windows\ConstellationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -174,6 +182,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="src\Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

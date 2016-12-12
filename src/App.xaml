@@ -3,7 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Simple_Scope"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             StartupUri="src/Windows/MainWindow.xaml">
+             Startup="Application_Startup"
+             StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/lang.ru-Ru.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

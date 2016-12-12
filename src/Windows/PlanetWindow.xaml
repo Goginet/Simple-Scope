@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Simple_Scope.Windows"
         xmlns:data="clr-namespace:Simple_Scope.Data"
         mc:Ignorable="d"
-        Title="PlanetWindow" Height="374.134" Width="367.678">
+        Title="PlanetWindow" Height="374.134" Width="430.754">
     <Window.Resources>
         <local:SpaceObjectToStringConverter x:Key="parentConverter" Universe="{StaticResource universe}" />
     </Window.Resources>
@@ -31,33 +31,33 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Name:" VerticalAlignment="Center" />
+            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource planet_window_name_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-            <Label Grid.Row="1" Grid.Column="0" Content="Position:" VerticalAlignment="Center" />
+            <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource planet_window_position_label}" VerticalAlignment="Center" />
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="X:"/>
+                <Label Content="{DynamicResource planet_window_position_x_label}"/>
                 <TextBox Text="{Binding X}" MinWidth="35" MaxWidth="40" />
-                <Label Content="Y:" Margin="10, 0"/>
+                <Label Content="{DynamicResource planet_window_position_y_label}" Margin="10, 0"/>
                 <TextBox Text="{Binding Y}" MinWidth="35" MaxWidth="40" />
-                <Label Content="Z:" Margin="10, 0"/>
+                <Label Content="{DynamicResource planet_window_position_z_label}" Margin="10, 0"/>
                 <TextBox Text="{Binding Z}" MinWidth="35" MaxWidth="40" />
             </StackPanel>
-            <Label Grid.Row="2" Grid.Column="0" Content="Radius:" VerticalAlignment="Center" />
+            <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource planet_window_radius_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Radius}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-            <Label Grid.Row="3" Grid.Column="0" Content="OrbitRadius:" VerticalAlignment="Center" />
+            <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource planet_window_orbit_radius_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding OrbitRadius}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-            <Label Grid.Row="4" Grid.Column="0" Content="Weight:" VerticalAlignment="Center" />
+            <Label Grid.Row="4" Grid.Column="0" Content="{DynamicResource planet_window_weight_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-            <Label Grid.Row="5" Grid.Column="0" Content="AxisPeriod:" VerticalAlignment="Center" />
+            <Label Grid.Row="5" Grid.Column="0" Content="{DynamicResource planet_window_axis_period_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding AxisPeriod}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-            <Label Grid.Row="6" Grid.Column="0" Content="OrbitPeriod:" VerticalAlignment="Center" />
+            <Label Grid.Row="6" Grid.Column="0" Content="{DynamicResource planet_window_orbit_period_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OrbitPeriod}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-            <Label Grid.Row="7" Grid.Column="0" Content="Parent:" VerticalAlignment="Center" />
+            <Label Grid.Row="7" Grid.Column="0" Content="{DynamicResource planet_window_parent_label}" VerticalAlignment="Center" />
             <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Parent, Converter={StaticResource parentConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Button Name="SaveButton" Content="Save" Width="100" Click="SaveButton_Click"/>
-            <Button Name="CancelButton" Content="Cancel" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
+            <Button Name="SaveButton" Content="{DynamicResource planet_window_save_button}" Width="100" Click="SaveButton_Click"/>
+            <Button Name="CancelButton" Content="{DynamicResource planet_window_cancel_button}" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
         </StackPanel>
     </Grid>
 </Window>

@@ -1,0 +1,64 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:Simple_Scope">
+    <v:String x:Key="main_window_settings_button">Settings</v:String>
+    <v:String x:Key="main_window_mesh_button">Mesh</v:String>
+    <v:String x:Key="main_window_location_button">Location</v:String>
+    <v:String x:Key="main_window_stars_list_button">Stars list</v:String>
+    <v:String x:Key="main_window_constellation_list_button">Constellation list</v:String>
+    <v:String x:Key="main_window_planets_list_button">Planets list</v:String>
+    <v:String x:Key="main_window_close_button">Close</v:String>
+    <v:String x:Key="main_window_add_button">Add</v:String>
+    <v:String x:Key="main_window_stars_mode">Stars</v:String>
+    <v:String x:Key="main_window_constellation_mode">Constellation</v:String>
+    <v:String x:Key="main_window_planets_mode">Planets</v:String>
+
+    <v:String x:Key="settings_window_path">Path</v:String>
+    <v:String x:Key="settings_window_compression">Compression</v:String>
+    <v:String x:Key="settings_window_json">Json</v:String>
+    <v:String x:Key="settings_window_binary">Binary</v:String>
+    <v:String x:Key="settings_window_save">Save</v:String>
+    <v:String x:Key="settings_window_load">Load</v:String>
+
+    <v:String x:Key="constellation_window_name_label">Name</v:String>
+    <v:String x:Key="constellation_window_position_label">Position:</v:String>
+    <v:String x:Key="constellation_window_position_x_label">X:</v:String>
+    <v:String x:Key="constellation_window_position_y_label">Y:</v:String>
+    <v:String x:Key="constellation_window_position_z_label">Z:</v:String>
+    <v:String x:Key="constellation_window_add_star_button">Add Star</v:String>
+    <v:String x:Key="constellation_window_add_vector_button">Add Vector</v:String>
+    <v:String x:Key="constellation_window_stars_label">Stars:</v:String>
+    <v:String x:Key="constellation_window_vectors_label">Vectors</v:String>
+    <v:String x:Key="constellation_window_save_button">Save</v:String>
+    <v:String x:Key="constellation_window_cancel_button">Cancel</v:String>
+
+    <v:String x:Key="star_window_name_label">Name:</v:String>
+    <v:String x:Key="star_window_position_label">Position:</v:String>
+    <v:String x:Key="star_window_position_x_label">X:</v:String>
+    <v:String x:Key="star_window_position_y_label">Y:</v:String>
+    <v:String x:Key="star_window_position_z_label">Z:</v:String>
+    <v:String x:Key="star_window_luminosity_label">Luminosity:</v:String>
+    <v:String x:Key="star_window_absolute_magnitude_label">AbsoluteMagnitude:</v:String>
+    <v:String x:Key="star_window_apparent_magnitude_label">ApparentMagnitude:</v:String>
+    <v:String x:Key="star_window_distance_label">Distance:</v:String>
+    <v:String x:Key="star_window_parent_label">Parent:</v:String>
+    <v:String x:Key="star_window_planets_label">Planets:</v:String>
+    <v:String x:Key="star_window_add_planet_button">Add Planet</v:String>
+    <v:String x:Key="star_window_save_button">Save</v:String>
+    <v:String x:Key="star_window_cancel_button">Cancel</v:String>
+
+    <v:String x:Key="planet_window_name_label">Name:</v:String>
+    <v:String x:Key="planet_window_position_label">Position:</v:String>
+    <v:String x:Key="planet_window_position_x_label">X:</v:String>
+    <v:String x:Key="planet_window_position_y_label">Y:</v:String>
+    <v:String x:Key="planet_window_position_z_label">Z:</v:String>
+    <v:String x:Key="planet_window_weight_label">Weight:</v:String>
+    <v:String x:Key="planet_window_radius_label">Radius:</v:String>
+    <v:String x:Key="planet_window_orbit_radius_label">Orbit Radius:</v:String>
+    <v:String x:Key="planet_window_orbit_period_label">Orbit Period:</v:String>
+    <v:String x:Key="planet_window_axis_period_label">Axis Period:</v:String>
+    <v:String x:Key="planet_window_parent_label">Parent:</v:String>
+    <v:String x:Key="planet_window_save_button">Save</v:String>
+    <v:String x:Key="planet_window_cancel_button">Cancel</v:String>
+</ResourceDictionary>

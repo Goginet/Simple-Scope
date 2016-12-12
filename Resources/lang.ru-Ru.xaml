@@ -1,0 +1,64 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:Simple_Scope">
+    <v:String x:Key="main_window_settings_button">Настройки</v:String>
+    <v:String x:Key="main_window_mesh_button">Сетка</v:String>
+    <v:String x:Key="main_window_location_button">Позиция</v:String>
+    <v:String x:Key="main_window_stars_list_button">Список звезд</v:String>
+    <v:String x:Key="main_window_constellation_list_button">Список созвездий</v:String>
+    <v:String x:Key="main_window_planets_list_button">Список планет</v:String>
+    <v:String x:Key="main_window_close_button">Закрыть</v:String>
+    <v:String x:Key="main_window_add_button">Добавить</v:String>
+    <v:String x:Key="main_window_stars_mode">Звезды</v:String>
+    <v:String x:Key="main_window_constellation_mode">Созвездие</v:String>
+    <v:String x:Key="main_window_planets_mode">Планеты</v:String>
+
+    <v:String x:Key="settings_window_path">Путь</v:String>
+    <v:String x:Key="settings_window_compression">Сжатие</v:String>
+    <v:String x:Key="settings_window_json">Json</v:String>
+    <v:String x:Key="settings_window_binary">Binary</v:String>
+    <v:String x:Key="settings_window_save">Сохранить</v:String>
+    <v:String x:Key="settings_window_load">Загрузить</v:String>
+
+    <v:String x:Key="constellation_window_name_label">Имя</v:String>
+    <v:String x:Key="constellation_window_position_label">Позиция:</v:String>
+    <v:String x:Key="constellation_window_position_x_label">X:</v:String>
+    <v:String x:Key="constellation_window_position_y_label">Y:</v:String>
+    <v:String x:Key="constellation_window_position_z_label">Z:</v:String>
+    <v:String x:Key="constellation_window_add_star_button">Добавить звезду</v:String>
+    <v:String x:Key="constellation_window_add_vector_button">Добавить вектор</v:String>
+    <v:String x:Key="constellation_window_stars_label">Добавить Звезду:</v:String>
+    <v:String x:Key="constellation_window_vectors_label">Вектора</v:String>
+    <v:String x:Key="constellation_window_save_button">Сохранитm</v:String>
+    <v:String x:Key="constellation_window_cancel_button">Отмена</v:String>
+
+    <v:String x:Key="star_window_name_label">Имя:</v:String>
+    <v:String x:Key="star_window_position_label">Позиция:</v:String>
+    <v:String x:Key="star_window_position_x_label">X:</v:String>
+    <v:String x:Key="star_window_position_y_label">Y:</v:String>
+    <v:String x:Key="star_window_position_z_label">Z:</v:String>
+    <v:String x:Key="star_window_luminosity_label">Светимость:</v:String>
+    <v:String x:Key="star_window_absolute_magnitude_label">Абсолютная звездная величина:</v:String>
+    <v:String x:Key="star_window_apparent_magnitude_label">Видимая звездня величина:</v:String>
+    <v:String x:Key="star_window_distance_label">Растояние:</v:String>
+    <v:String x:Key="star_window_parent_label">Созвездие:</v:String>
+    <v:String x:Key="star_window_planets_label">Планеты:</v:String>
+    <v:String x:Key="star_window_add_planet_button">Добавить планету</v:String>
+    <v:String x:Key="star_window_save_button">Сохранить</v:String>
+    <v:String x:Key="star_window_cancel_button">Отмена</v:String>
+
+    <v:String x:Key="planet_window_name_label">Имя:</v:String>
+    <v:String x:Key="planet_window_position_label">Позиция:</v:String>
+    <v:String x:Key="planet_window_position_x_label">X:</v:String>
+    <v:String x:Key="planet_window_position_y_label">Y:</v:String>
+    <v:String x:Key="planet_window_position_z_label">Z:</v:String>
+    <v:String x:Key="planet_window_weight_label">Вес:</v:String>
+    <v:String x:Key="planet_window_radius_label">Радиус:</v:String>
+    <v:String x:Key="planet_window_orbit_radius_label">Радиус орбиты:</v:String>
+    <v:String x:Key="planet_window_orbit_period_label">Период обращение вокруг орбиты:</v:String>
+    <v:String x:Key="planet_window_axis_period_label">Период обращение вокруг оси:</v:String>
+    <v:String x:Key="planet_window_parent_label">Звезд:</v:String>
+    <v:String x:Key="planet_window_save_button">Сохранить</v:String>
+    <v:String x:Key="planet_window_cancel_button">Отмена</v:String>
+</ResourceDictionary>

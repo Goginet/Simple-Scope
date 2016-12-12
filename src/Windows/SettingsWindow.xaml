@@ -18,22 +18,22 @@
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Path" />
+            <Label Grid.Column="0" Content="{DynamicResource settings_window_path}" />
             <TextBox Name="path" Grid.Column="1"/>
         </Grid>
-        <CheckBox Grid.Row="1" Grid.Column="1" Name="compression" Content="Compression" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <CheckBox Grid.Row="1" Grid.Column="1" Name="compression" Content="{DynamicResource settings_window_compression}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         <Grid Grid.Row="2" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <RadioButton Grid.Column="0" GroupName="FileType" Name="binary" Content="Binary" HorizontalAlignment="Center"/>
-            <RadioButton Grid.Column="1" GroupName="FileType" Name="text" Content="Json" HorizontalAlignment="Center" IsChecked="True"/>
+            <RadioButton Grid.Column="0" GroupName="FileType" Name="binary" Content="{DynamicResource settings_window_binary}" HorizontalAlignment="Center"/>
+            <RadioButton Grid.Column="1" GroupName="FileType" Name="text" Content="{DynamicResource settings_window_json}" HorizontalAlignment="Center" IsChecked="True"/>
         </Grid>
         <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal" >
-            <Button Name="saveButton" Content="Save" Width="70" Click="saveButton_Click"/>
-            <Button Name="loadButton" Content="Load" Width="70" Margin="30, 0, 0, 0" Click="loadButton_Click"/>
+            <Button Name="saveButton" Content="{DynamicResource settings_window_save}" Width="70" Click="saveButton_Click"/>
+            <Button Name="loadButton" Content="{DynamicResource settings_window_load}" Width="70" Margin="30, 0, 0, 0" Click="loadButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

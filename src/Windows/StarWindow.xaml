@@ -6,7 +6,7 @@
         xmlns:data="clr-namespace:Simple_Scope.Data"
         xmlns:local="clr-namespace:Simple_Scope.Windows"
         mc:Ignorable="d"
-        Title="Window1" Height="466.485" Width="408.783">
+        Title="Window1" Width="417.867" >
     <Window.Resources>
         <local:SpaceObjectToStringConverter x:Key="parentConverter" Universe="{StaticResource universe}" />
     </Window.Resources>
@@ -30,28 +30,28 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="Name:" VerticalAlignment="Center" />
+            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource star_window_name_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="1" Grid.Column="0" Content="Position:" VerticalAlignment="Center" />
+            <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource star_window_position_label}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,15" Width="120" />
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="X:"/>
+            <Label Content="{DynamicResource star_window_position_x_label}"/>
             <TextBox Text="{Binding X}" MinWidth="40" />
-            <Label Content="Y:" Margin="10, 0"/>
+            <Label Content="{DynamicResource star_window_position_y_label}"/>
             <TextBox Text="{Binding Y}" MinWidth="40" />
-            <Label Content="Z:" Margin="10, 0"/>
+            <Label Content="{DynamicResource star_window_position_z_label}"/>
             <TextBox Text="{Binding Z}" MinWidth="40" />
         </StackPanel>
-        <Label Grid.Row="2" Grid.Column="0" Content="Luminosity:" VerticalAlignment="Center" />
+        <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource star_window_luminosity_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Luminosity}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="3" Grid.Column="0" Content="AbsoluteMagnitude:" VerticalAlignment="Center" />
+        <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource star_window_absolute_magnitude_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AbsoluteMagnitude, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="4" Grid.Column="0" Content="ApparentMagnitude:" VerticalAlignment="Center" />
+        <Label Grid.Row="4" Grid.Column="0" Content="{DynamicResource star_window_apparent_magnitude_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ApparentMagnitude, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="5" Grid.Column="0" Content="Distance:" VerticalAlignment="Center" />
+            <Label Grid.Row="5" Grid.Column="0" Content="{DynamicResource star_window_distance_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Distance, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" />
-        <Label Grid.Row="6" Grid.Column="0" Content="Parent:" VerticalAlignment="Center" />
+        <Label Grid.Row="6" Grid.Column="0" Content="{DynamicResource star_window_parent_label}" VerticalAlignment="Center" />
         <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Parent, Converter={StaticResource parentConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
-        <Label Grid.Row="7" Grid.Column="0" Content="Planets:" VerticalAlignment="Center" />
+        <Label Grid.Row="7" Grid.Column="0" Content="{DynamicResource star_window_planets_label}" VerticalAlignment="Center" />
         <Grid Grid.Row="7" Grid.Column="1" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -60,17 +60,17 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBox Name="AddPlanetTextBox" />
-                <Button Grid.Column="1" Grid.Row="0"  Name="AddPlanetButton" Content="Add Planet" Click="AddPlanetButton_Click"/>
+                <Button Grid.Column="1" Grid.Row="0"  Name="AddPlanetButton" Content="{DynamicResource star_window_add_planet_button}" Click="AddPlanetButton_Click"/>
             </Grid>
             <ListView x:Name="PlanetsListView" Grid.Row="1" ItemsSource="{Binding Children}" />
         </Grid>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Button Name="SaveExit" Content="Save" Width="100" Click="SaveExit_Click" />
-            <Button Name="CancelButton" Content="Cancel" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
+            <Button Name="SaveExit" Content="{DynamicResource star_window_save_button}" Width="100" Click="SaveExit_Click" />
+            <Button Name="CancelButton" Content="{DynamicResource star_window_cancel_button}" Width="100" Margin="40, 0, 0, 0" Click="CancelButton_Click" />
         </StackPanel>
     </Grid>
 </Window>

@@ -4,6 +4,7 @@ using SkyVisual.DrawingObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -162,7 +163,17 @@ namespace Simple_Scope.Windows
         //--------------------------------------------------------------------//
 
         private void LoadPanel(Predicate<object> filter, ObjectsPanelType panelType) {
-            ListPanelLabel.Content = panelType;
+            switch (panelType) {
+                case ObjectsPanelType.Stars:
+                    ListPanelLabel.Content = Application.Current.Resources["main_window_stars_mode"];
+                    break;
+                case ObjectsPanelType.Planets:
+                    ListPanelLabel.Content = Application.Current.Resources["main_window_planets_mode"];
+                    break;
+                case ObjectsPanelType.Constellations:
+                    ListPanelLabel.Content = Application.Current.Resources["main_window_constellation_mode"];
+                    break;
+            }
             currenObjectsPaneltType = panelType;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(this.ListView.ItemsSource);
             view.Filter = filter;
@@ -207,6 +218,10 @@ namespace Simple_Scope.Windows
                 return true;
             }
             return false;
+        }
+
+        private void Lang_Button_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            App.Language = languageComboBox.SelectedItem as CultureInfo;
         }
     }
 }
