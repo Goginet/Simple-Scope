@@ -14,8 +14,23 @@
         Title="MainWindow" Height="800" Width="800" ResizeMode="NoResize"
         >
     <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Control.Background" Value="Transparent" />
+            <Setter Property="Control.Foreground" Value="White" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="Azure" />
+            <Setter Property="Control.Foreground" Value="Black" />
+        </Style>
         <data:Universe x:Key="universe" />
         <local:SphericalCamera x:Key="camera" CameraSpeed="10" DirectionInGrad="0, 90" />
+        <Storyboard TargetProperty="Width" TargetName="ListLayout" x:Key="openListAnimation">
+            <DoubleAnimation To="300" Duration="0:0:0.5" AccelerationRatio="0.3" DecelerationRatio="0.7" />
+        </Storyboard>
+        <Storyboard TargetProperty="Width" TargetName="ListLayout" x:Key="closeListAnimation">
+            <DoubleAnimation To="0" Duration="0:0:0.5" AccelerationRatio="0.3" DecelerationRatio="0.7"/>
+        </Storyboard>
     </Window.Resources>
     <Grid Name="mainLayout" DataContext="{DynamicResource universe}">
         <Grid Name="View3dLayout" Background="Black" MouseMove="View3dLayout_MouseMove" MouseDown="View3dLayout_MouseDown" MouseUp="View3dLayout_MouseUp">
@@ -43,13 +58,37 @@
                 <Button Name="Mesh" MinWidth="100" HorizontalAlignment="Right" Content="{DynamicResource main_window_mesh_button}"/>
             </StackPanel>
             <StackPanel Name="LeftControlLayout" HorizontalAlignment="Left" Orientation="Horizontal">
-                <Button Name="ViewStarsList" MinWidth="100" HorizontalAlignment="Left" Click="ViewStarsList_Click" Content="{DynamicResource main_window_stars_list_button}"/>
-                <Button Name="ViewConstellationList" MinWidth="100" HorizontalAlignment="Left" Click="ViewConstellationList_Click" Content="{DynamicResource main_window_constellation_list_button}"/>
-                <Button Name="ViewPlanetsList" MinWidth="100" HorizontalAlignment="Left" Click="ViewPlanetsList_Click" Content="{DynamicResource main_window_planets_list_button}"/>
+                <Button Name="ViewStarsList" MinWidth="100" HorizontalAlignment="Left" Click="ViewStarsList_Click" Content="{DynamicResource main_window_stars_list_button}">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click" >
+                            <EventTrigger.Actions>
+                                <BeginStoryboard Storyboard="{StaticResource openListAnimation}" />
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Name="ViewConstellationList" MinWidth="100" HorizontalAlignment="Left" Click="ViewConstellationList_Click" Content="{DynamicResource main_window_constellation_list_button}">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard Storyboard="{StaticResource openListAnimation}"/>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Button Name="ViewPlanetsList" MinWidth="100" HorizontalAlignment="Left" Click="ViewPlanetsList_Click" Content="{DynamicResource main_window_planets_list_button}">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click" >
+                            <EventTrigger.Actions>
+                                <BeginStoryboard Storyboard="{StaticResource openListAnimation}" />
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
             </StackPanel>
         </Grid>
         
-        <Grid Name="ListLayout" Background="Yellow" HorizontalAlignment="Left" Width="0" Margin="0,0,0,50">
+        <Grid Name="ListLayout" Background="BlueViolet" HorizontalAlignment="Left" Width="0" Margin="0,0,0,50">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition />
@@ -57,7 +96,15 @@
             <Grid Grid.Row="0">
                 <Label Name="ListPanelLabel"/>
                 <Button Name="ListPanelCloseButton" Content="{DynamicResource main_window_close_button}" MinWidth="50" Height="20" VerticalAlignment="Top" 
-                        HorizontalAlignment="Right" Click="ListPanelCloseButton_Click"/>
+                        HorizontalAlignment="Right">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard Storyboard="{StaticResource closeListAnimation}" />
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
                 <Button Name="ListPanelAddButton" Content="{DynamicResource main_window_add_button}" MinWidth="50" Height="20" VerticalAlignment="Bottom" 
                         HorizontalAlignment="Right" Click="ListPanelAddButton_Click"/>
             </Grid>

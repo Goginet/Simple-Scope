@@ -65,10 +65,6 @@ namespace Simple_Scope.Windows
             LoadPanel(FilterByType<Planet>, ObjectsPanelType.Planets);
         }
 
-        private void ListPanelCloseButton_Click(object sender, RoutedEventArgs e) {
-            CloseListPanel();
-        }
-
         private void DeleteSelectedItem(object sender, RoutedEventArgs e) {
             _universe.Remove(ListView.SelectedItem as SpaceObject);
             this.Resources[UniverseKey] = _universe;
@@ -178,15 +174,6 @@ namespace Simple_Scope.Windows
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(this.ListView.ItemsSource);
             view.Filter = filter;
             view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            OpenPanel();
-        }
-
-        private void CloseListPanel() {
-            ListLayout.Width = 0;
-        }
-
-        private void OpenPanel() {
-            ListLayout.Width = ListLayoutWidth;
         }
 
         private void OpenInfoWindow(SpaceObject obj, SaveExit save)
