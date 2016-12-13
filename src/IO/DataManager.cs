@@ -46,9 +46,16 @@ namespace Simple_Scope.IO
                         data = formatter.Deserialize(decompress) as Universe;
                     }
                 } else {
-                    data = formatter.Deserialize(stream) as Universe;
+                    try {
+                        data = formatter.Deserialize(stream) as Universe;
+                    }
+                    catch(Exception e) {
+                        data = null;
+                    }
                 }
-                data.Init();
+                if (data != null) {
+                    data.Init();
+                }
             }
             if (data == null) {
                 MessageBox.Show("Parse Error!");
